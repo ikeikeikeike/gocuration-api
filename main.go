@@ -9,9 +9,12 @@ import (
 )
 
 func main() {
+	goji.Use(SuperSecure)
+
 	goji.Get("/divas", Divas)
 	goji.Get("/animes", Animes)
 	goji.Get("/characters", Characters)
+
 	goji.NotFound(NotFound)
 	goji.Serve()
 }
