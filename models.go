@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"os"
 	"time"
 
@@ -9,8 +10,20 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+type Image struct {
+	ID      int64
+	Name    string
+	Src     string
+	Ext     string
+	Mime    string
+	Width   int
+	Height  int
+	Created time.Time
+	Updated time.Time
+}
+
 type Diva struct {
-	Id          int64
+	ID          int64
 	Name        string
 	Kana        string
 	Romaji      string
@@ -26,12 +39,13 @@ type Diva struct {
 	Outline     string
 	Created     time.Time
 	Updated     time.Time
-	Icon        int64
+	Icon        Image
+	IconID      sql.NullInt64
 	VideosCount int
 }
 
 type Anime struct {
-	Id            int64
+	ID            int64
 	Name          string
 	Alias         string
 	Kana          string
@@ -44,7 +58,9 @@ type Anime struct {
 	Outline       string
 	Created       time.Time
 	Updated       time.Time
-	Icon          int64
+	Icon          Image
+	IconID        sql.NullInt64
+	Characters    []Character
 	PicturesCount int
 }
 
@@ -65,9 +81,11 @@ type Character struct {
 	Outline       string
 	Created       time.Time
 	Updated       time.Time
-	Icon          int64
+	Icon          Image
+	IconID        sql.NullInt64
 	Product       string
-	Anime         int64
+	Anime         Anime
+	AnimeID       sql.NullInt64
 	PicturesCount int
 }
 
